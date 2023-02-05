@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors')
 const dotenv = require('dotenv');
-
+const axios = require('axios');
 
 dotenv.config({path:'./config.env'});
 app.use(cors());
@@ -49,8 +49,8 @@ const refreshWeatherData = async()=>{
     ]
 
     const citiesWeatherInfo = cities.map(async(city)=>{
-    const api = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`)
-    const data = await api.json()
+    const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}`)
+    const data = res.data
     
     if(data){
         
